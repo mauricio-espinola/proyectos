@@ -3120,3 +3120,163 @@ prisma:query SELECT `main`.`spread_card_results`.`id`, `main`.`spread_card_resul
 prisma:query SELECT `main`.`tarot_cards`.`id`, `main`.`tarot_cards`.`name`, `main`.`tarot_cards`.`shortName`, `main`.`tarot_cards`.`cardType`, `main`.`tarot_cards`.`suit`, `main`.`tarot_cards`.`element`, `main`.`tarot_cards`.`imageUrl`, `main`.`tarot_cards`.`imageAlt`, `main`.`tarot_cards`.`number`, `main`.`tarot_cards`.`position`, `main`.`tarot_cards`.`keywords`, `main`.`tarot_cards`.`description`, `main`.`tarot_cards`.`symbolism`, `main`.`tarot_cards`.`uprightMeaning`, `main`.`tarot_cards`.`reversedMeaning`, `main`.`tarot_cards`.`story`, `main`.`tarot_cards`.`lessons`, `main`.`tarot_cards`.`questions`, `main`.`tarot_cards`.`loveMeaning`, `main`.`tarot_cards`.`careerMeaning`, `main`.`tarot_cards`.`spiritualMeaning`, `main`.`tarot_cards`.`symbols`, `main`.`tarot_cards`.`examples`, `main`.`tarot_cards`.`combinations`, `main`.`tarot_cards`.`isActive`, `main`.`tarot_cards`.`createdAt`, `main`.`tarot_cards`.`updatedAt` FROM `main`.`tarot_cards` WHERE `main`.`tarot_cards`.`id` IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) LIMIT ? OFFSET ?
 prisma:query SELECT `main`.`interpretations`.`id`, `main`.`interpretations`.`sessionId`, `main`.`interpretations`.`step`, `main`.`interpretations`.`content`, `main`.`interpretations`.`rawContent`, `main`.`interpretations`.`focus`, `main`.`interpretations`.`generatedAt` FROM `main`.`interpretations` WHERE `main`.`interpretations`.`sessionId` IN (?,?,?,?,?,?,?,?,?,?) LIMIT ? OFFSET ?
  GET /api/readings 200 in 16ms (compile: 1392µs, render: 15ms)
+==========================================
+[2026-03-24 12:07:08] Starting: bun install
+==========================================
+[BUN] Installing dependencies...
+[0.11ms] ".env"
+bun install v1.3.10 (30e609e0)
+
+Checked 850 installs across 919 packages (no changes) [122.00ms]
+==========================================
+[2026-03-24 12:07:09] Completed: bun install
+[LOG] Step: bun install | Duration: 1s
+==========================================
+
+==========================================
+[2026-03-24 12:07:09] Starting: bun run db:push
+==========================================
+[BUN] Setting up database...
+$ prisma db push
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": SQLite database "custom.db" at "file:/home/z/my-project/db/custom.db"
+
+The database is already in sync with the Prisma schema.
+
+Running generate... (Use --skip-generate to skip the generators)
+[2K[1A[2K[GRunning generate... - Prisma Client
+[2K[1A[2K[G✔ Generated Prisma Client (v6.19.2) to ./node_modules/@prisma/client in 154ms
+
+==========================================
+[2026-03-24 12:07:10] Completed: bun run db:push
+[LOG] Step: bun run db:push | Duration: 1s
+==========================================
+
+==========================================
+[2026-03-24 12:07:10] Starting: Starting Next.js dev server
+==========================================
+[BUN] Starting development server...
+==========================================
+$ next dev -p 3000 2>&1 | tee dev.log
+[2026-03-24 12:07:10] Completed: Starting Next.js dev server
+[LOG] Step: Starting Next.js dev server | Duration: 0s
+==========================================
+
+==========================================
+[2026-03-24 12:07:10] Starting: Waiting for Next.js dev server
+==========================================
+Waiting for Next.js dev server to be ready on localhost:3000...
+Attempt 1/60: Next.js dev server not ready yet, waiting...
+▲ Next.js 16.1.3 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://21.0.4.25:3000
+- Environments: .env
+
+✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+✓ Ready in 1018ms
+○ Compiling / ...
+Attempt 2/60: Next.js dev server not ready yet, waiting...
+ GET / 200 in 3.8s (compile: 3.7s, render: 58ms)
+ GET / 200 in 5.2s (compile: 5.2s, render: 55ms)
+ GET / 200 in 21ms (compile: 1991µs, render: 19ms)
+ GET / 200 in 23ms (compile: 2ms, render: 20ms)
+Next.js dev server is ready!
+==========================================
+[2026-03-24 12:07:17] Completed: Waiting for Next.js dev server
+[LOG] Step: Waiting for Next.js dev server | Duration: 7s
+==========================================
+
+==========================================
+[2026-03-24 12:07:17] Starting: Health check
+==========================================
+[BUN] Performing health check...
+ GET / 200 in 33ms (compile: 2ms, render: 30ms)
+[BUN] Health check passed
+==========================================
+[2026-03-24 12:07:17] Completed: Health check
+[LOG] Step: Health check | Duration: 0s
+==========================================
+
+==========================================
+[2026-03-24 12:07:17] Starting: Starting mini-services
+==========================================
+Found mini-services directory, scanning for sub-services...
+Mini-services startup completed. Started 0 service(s).
+==========================================
+[2026-03-24 12:07:17] Completed: Starting mini-services
+[LOG] Step: Starting mini-services | Duration: 0s
+==========================================
+
+Next.js dev server is running in background (PID: 620).
+Use 'kill 620' to stop it.
+ GET / 200 in 45ms (compile: 5ms, render: 40ms)
+prisma:query SELECT `main`.`users`.`id`, `main`.`users`.`email`, `main`.`users`.`name`, `main`.`users`.`password`, `main`.`users`.`role`, `main`.`users`.`avatar`, `main`.`users`.`bio`, `main`.`users`.`cardsViewed`, `main`.`users`.`readingsDone`, `main`.`users`.`level`, `main`.`users`.`experience`, `main`.`users`.`preferences`, `main`.`users`.`createdAt`, `main`.`users`.`updatedAt`, `main`.`users`.`lastLoginAt` FROM `main`.`users` WHERE (`main`.`users`.`email` = ? AND 1=1) LIMIT ? OFFSET ?
+prisma:query INSERT INTO `main`.`users` (`id`, `email`, `name`, `password`, `role`, `cardsViewed`, `readingsDone`, `level`, `experience`, `createdAt`, `updatedAt`) VALUES (?,?,?,?,?,?,?,?,?,?,?) RETURNING `id` AS `id`, `email` AS `email`, `name` AS `name`, `role` AS `role`, `avatar` AS `avatar`, `cardsViewed` AS `cardsViewed`, `readingsDone` AS `readingsDone`, `level` AS `level`, `experience` AS `experience`
+ POST /api/auth/register 200 in 632ms (compile: 521ms, render: 111ms)
+prisma:query SELECT `main`.`sessions`.`id`, `main`.`sessions`.`userId`, `main`.`sessions`.`token`, `main`.`sessions`.`expiresAt`, `main`.`sessions`.`userAgent`, `main`.`sessions`.`ipAddress`, `main`.`sessions`.`createdAt` FROM `main`.`sessions` WHERE (`main`.`sessions`.`token` = ? AND 1=1) LIMIT ? OFFSET ?
+ GET /api/readings 401 in 114ms (compile: 108ms, render: 6ms)
+prisma:query SELECT 1
+prisma:query SELECT `main`.`tarot_cards`.`id`, `main`.`tarot_cards`.`name`, `main`.`tarot_cards`.`shortName`, `main`.`tarot_cards`.`cardType`, `main`.`tarot_cards`.`suit`, `main`.`tarot_cards`.`element`, `main`.`tarot_cards`.`imageUrl`, `main`.`tarot_cards`.`imageAlt`, `main`.`tarot_cards`.`number`, `main`.`tarot_cards`.`position`, `main`.`tarot_cards`.`keywords`, `main`.`tarot_cards`.`description`, `main`.`tarot_cards`.`symbolism`, `main`.`tarot_cards`.`uprightMeaning`, `main`.`tarot_cards`.`reversedMeaning`, `main`.`tarot_cards`.`story`, `main`.`tarot_cards`.`lessons`, `main`.`tarot_cards`.`questions`, `main`.`tarot_cards`.`loveMeaning`, `main`.`tarot_cards`.`careerMeaning`, `main`.`tarot_cards`.`spiritualMeaning`, `main`.`tarot_cards`.`symbols`, `main`.`tarot_cards`.`examples`, `main`.`tarot_cards`.`combinations`, `main`.`tarot_cards`.`isActive`, `main`.`tarot_cards`.`createdAt`, `main`.`tarot_cards`.`updatedAt` FROM `main`.`tarot_cards` WHERE `main`.`tarot_cards`.`isActive` = ? ORDER BY `main`.`tarot_cards`.`position` ASC LIMIT ? OFFSET ?
+ GET /api/cards 200 in 125ms (compile: 102ms, render: 23ms)
+ POST /api/interpret 200 in 15.7s (compile: 127ms, render: 15.6s)
+ POST /api/interpret 200 in 10.7s (compile: 3ms, render: 10.7s)
+ GET / 200 in 85ms (compile: 50ms, render: 34ms)
+ GET / 200 in 15ms (compile: 2ms, render: 13ms)
+ GET / 200 in 18ms (compile: 3ms, render: 15ms)
+ GET / 200 in 19ms (compile: 2ms, render: 17ms)
+ GET / 200 in 13ms (compile: 2ms, render: 10ms)
+ GET / 200 in 16ms (compile: 2ms, render: 14ms)
+ GET / 200 in 21ms (compile: 3ms, render: 18ms)
+ GET / 200 in 14ms (compile: 1944µs, render: 12ms)
+ GET / 200 in 21ms (compile: 4ms, render: 18ms)
+ GET / 200 in 22ms (compile: 3ms, render: 19ms)
+ GET / 200 in 11ms (compile: 1968µs, render: 9ms)
+ GET / 200 in 13ms (compile: 2ms, render: 11ms)
+ GET / 200 in 20ms (compile: 2ms, render: 18ms)
+ GET / 200 in 15ms (compile: 4ms, render: 11ms)
+ GET / 200 in 14ms (compile: 2ms, render: 11ms)
+ GET / 200 in 20ms (compile: 1927µs, render: 18ms)
+ GET / 200 in 13ms (compile: 2ms, render: 11ms)
+ GET / 200 in 12ms (compile: 1872µs, render: 10ms)
+ GET / 200 in 13ms (compile: 3ms, render: 10ms)
+ GET / 200 in 15ms (compile: 1933µs, render: 13ms)
+ GET / 200 in 18ms (compile: 3ms, render: 15ms)
+ GET / 200 in 19ms (compile: 3ms, render: 16ms)
+ GET / 200 in 11ms (compile: 1850µs, render: 9ms)
+ GET / 200 in 12ms (compile: 1900µs, render: 10ms)
+ GET / 200 in 15ms (compile: 1932µs, render: 13ms)
+ GET / 200 in 18ms (compile: 3ms, render: 14ms)
+ GET / 200 in 21ms (compile: 3ms, render: 18ms)
+ GET / 200 in 12ms (compile: 1980µs, render: 10ms)
+ GET / 200 in 195ms (compile: 4ms, render: 191ms)
+prisma:query SELECT 1
+prisma:query SELECT `main`.`sessions`.`id`, `main`.`sessions`.`userId`, `main`.`sessions`.`token`, `main`.`sessions`.`expiresAt`, `main`.`sessions`.`userAgent`, `main`.`sessions`.`ipAddress`, `main`.`sessions`.`createdAt` FROM `main`.`sessions` WHERE (`main`.`sessions`.`token` = ? AND 1=1) LIMIT ? OFFSET ?
+ GET /api/auth/me 401 in 116ms (compile: 102ms, render: 14ms)
+ GET / 200 in 44ms (compile: 4ms, render: 40ms)
+ GET / 200 in 43ms (compile: 4ms, render: 39ms)
+prisma:query SELECT 1
+prisma:query SELECT `main`.`tarot_cards`.`id`, `main`.`tarot_cards`.`name`, `main`.`tarot_cards`.`shortName`, `main`.`tarot_cards`.`cardType`, `main`.`tarot_cards`.`suit`, `main`.`tarot_cards`.`element`, `main`.`tarot_cards`.`imageUrl`, `main`.`tarot_cards`.`imageAlt`, `main`.`tarot_cards`.`number`, `main`.`tarot_cards`.`position`, `main`.`tarot_cards`.`keywords`, `main`.`tarot_cards`.`description`, `main`.`tarot_cards`.`symbolism`, `main`.`tarot_cards`.`uprightMeaning`, `main`.`tarot_cards`.`reversedMeaning`, `main`.`tarot_cards`.`story`, `main`.`tarot_cards`.`lessons`, `main`.`tarot_cards`.`questions`, `main`.`tarot_cards`.`loveMeaning`, `main`.`tarot_cards`.`careerMeaning`, `main`.`tarot_cards`.`spiritualMeaning`, `main`.`tarot_cards`.`symbols`, `main`.`tarot_cards`.`examples`, `main`.`tarot_cards`.`combinations`, `main`.`tarot_cards`.`isActive`, `main`.`tarot_cards`.`createdAt`, `main`.`tarot_cards`.`updatedAt` FROM `main`.`tarot_cards` WHERE `main`.`tarot_cards`.`isActive` = ? ORDER BY `main`.`tarot_cards`.`position` ASC LIMIT ? OFFSET ?
+ GET /api/cards 200 in 37ms (compile: 21ms, render: 16ms)
+prisma:query SELECT `main`.`tarot_cards`.`id`, `main`.`tarot_cards`.`name`, `main`.`tarot_cards`.`shortName`, `main`.`tarot_cards`.`cardType`, `main`.`tarot_cards`.`suit`, `main`.`tarot_cards`.`element`, `main`.`tarot_cards`.`imageUrl`, `main`.`tarot_cards`.`imageAlt`, `main`.`tarot_cards`.`number`, `main`.`tarot_cards`.`position`, `main`.`tarot_cards`.`keywords`, `main`.`tarot_cards`.`description`, `main`.`tarot_cards`.`symbolism`, `main`.`tarot_cards`.`uprightMeaning`, `main`.`tarot_cards`.`reversedMeaning`, `main`.`tarot_cards`.`story`, `main`.`tarot_cards`.`lessons`, `main`.`tarot_cards`.`questions`, `main`.`tarot_cards`.`loveMeaning`, `main`.`tarot_cards`.`careerMeaning`, `main`.`tarot_cards`.`spiritualMeaning`, `main`.`tarot_cards`.`symbols`, `main`.`tarot_cards`.`examples`, `main`.`tarot_cards`.`combinations`, `main`.`tarot_cards`.`isActive`, `main`.`tarot_cards`.`createdAt`, `main`.`tarot_cards`.`updatedAt` FROM `main`.`tarot_cards` WHERE `main`.`tarot_cards`.`isActive` = ? ORDER BY `main`.`tarot_cards`.`position` ASC LIMIT ? OFFSET ?
+ GET /api/cards 200 in 17ms (compile: 1925µs, render: 15ms)
+ GET / 200 in 43ms (compile: 4ms, render: 40ms)
+prisma:query SELECT 1
+prisma:query SELECT `main`.`tarot_cards`.`id`, `main`.`tarot_cards`.`name`, `main`.`tarot_cards`.`shortName`, `main`.`tarot_cards`.`cardType`, `main`.`tarot_cards`.`suit`, `main`.`tarot_cards`.`element`, `main`.`tarot_cards`.`imageUrl`, `main`.`tarot_cards`.`imageAlt`, `main`.`tarot_cards`.`number`, `main`.`tarot_cards`.`position`, `main`.`tarot_cards`.`keywords`, `main`.`tarot_cards`.`description`, `main`.`tarot_cards`.`symbolism`, `main`.`tarot_cards`.`uprightMeaning`, `main`.`tarot_cards`.`reversedMeaning`, `main`.`tarot_cards`.`story`, `main`.`tarot_cards`.`lessons`, `main`.`tarot_cards`.`questions`, `main`.`tarot_cards`.`loveMeaning`, `main`.`tarot_cards`.`careerMeaning`, `main`.`tarot_cards`.`spiritualMeaning`, `main`.`tarot_cards`.`symbols`, `main`.`tarot_cards`.`examples`, `main`.`tarot_cards`.`combinations`, `main`.`tarot_cards`.`isActive`, `main`.`tarot_cards`.`createdAt`, `main`.`tarot_cards`.`updatedAt` FROM `main`.`tarot_cards` WHERE `main`.`tarot_cards`.`isActive` = ? ORDER BY `main`.`tarot_cards`.`position` ASC LIMIT ? OFFSET ?
+ GET /api/cards 200 in 18ms (compile: 1711µs, render: 16ms)
+prisma:query SELECT `main`.`tarot_cards`.`id`, `main`.`tarot_cards`.`name`, `main`.`tarot_cards`.`shortName`, `main`.`tarot_cards`.`cardType`, `main`.`tarot_cards`.`suit`, `main`.`tarot_cards`.`element`, `main`.`tarot_cards`.`imageUrl`, `main`.`tarot_cards`.`imageAlt`, `main`.`tarot_cards`.`number`, `main`.`tarot_cards`.`position`, `main`.`tarot_cards`.`keywords`, `main`.`tarot_cards`.`description`, `main`.`tarot_cards`.`symbolism`, `main`.`tarot_cards`.`uprightMeaning`, `main`.`tarot_cards`.`reversedMeaning`, `main`.`tarot_cards`.`story`, `main`.`tarot_cards`.`lessons`, `main`.`tarot_cards`.`questions`, `main`.`tarot_cards`.`loveMeaning`, `main`.`tarot_cards`.`careerMeaning`, `main`.`tarot_cards`.`spiritualMeaning`, `main`.`tarot_cards`.`symbols`, `main`.`tarot_cards`.`examples`, `main`.`tarot_cards`.`combinations`, `main`.`tarot_cards`.`isActive`, `main`.`tarot_cards`.`createdAt`, `main`.`tarot_cards`.`updatedAt` FROM `main`.`tarot_cards` WHERE `main`.`tarot_cards`.`isActive` = ? ORDER BY `main`.`tarot_cards`.`position` ASC LIMIT ? OFFSET ?
+ GET /api/cards 200 in 13ms (compile: 1688µs, render: 11ms)
+prisma:query SELECT `main`.`sessions`.`id`, `main`.`sessions`.`userId`, `main`.`sessions`.`token`, `main`.`sessions`.`expiresAt`, `main`.`sessions`.`userAgent`, `main`.`sessions`.`ipAddress`, `main`.`sessions`.`createdAt` FROM `main`.`sessions` WHERE (`main`.`sessions`.`token` = ? AND 1=1) LIMIT ? OFFSET ?
+ GET /api/readings 401 in 28ms (compile: 23ms, render: 6ms)
+ GET / 200 in 26ms (compile: 2ms, render: 24ms)
+ GET / 200 in 28ms (compile: 3ms, render: 25ms)
+prisma:query SELECT 1
+prisma:query SELECT `main`.`tarot_cards`.`id`, `main`.`tarot_cards`.`name`, `main`.`tarot_cards`.`shortName`, `main`.`tarot_cards`.`cardType`, `main`.`tarot_cards`.`suit`, `main`.`tarot_cards`.`element`, `main`.`tarot_cards`.`imageUrl`, `main`.`tarot_cards`.`imageAlt`, `main`.`tarot_cards`.`number`, `main`.`tarot_cards`.`position`, `main`.`tarot_cards`.`keywords`, `main`.`tarot_cards`.`description`, `main`.`tarot_cards`.`symbolism`, `main`.`tarot_cards`.`uprightMeaning`, `main`.`tarot_cards`.`reversedMeaning`, `main`.`tarot_cards`.`story`, `main`.`tarot_cards`.`lessons`, `main`.`tarot_cards`.`questions`, `main`.`tarot_cards`.`loveMeaning`, `main`.`tarot_cards`.`careerMeaning`, `main`.`tarot_cards`.`spiritualMeaning`, `main`.`tarot_cards`.`symbols`, `main`.`tarot_cards`.`examples`, `main`.`tarot_cards`.`combinations`, `main`.`tarot_cards`.`isActive`, `main`.`tarot_cards`.`createdAt`, `main`.`tarot_cards`.`updatedAt` FROM `main`.`tarot_cards` WHERE `main`.`tarot_cards`.`isActive` = ? ORDER BY `main`.`tarot_cards`.`position` ASC LIMIT ? OFFSET ?
+ GET /api/cards 200 in 13ms (compile: 1731µs, render: 12ms)
+prisma:query SELECT `main`.`tarot_cards`.`id`, `main`.`tarot_cards`.`name`, `main`.`tarot_cards`.`shortName`, `main`.`tarot_cards`.`cardType`, `main`.`tarot_cards`.`suit`, `main`.`tarot_cards`.`element`, `main`.`tarot_cards`.`imageUrl`, `main`.`tarot_cards`.`imageAlt`, `main`.`tarot_cards`.`number`, `main`.`tarot_cards`.`position`, `main`.`tarot_cards`.`keywords`, `main`.`tarot_cards`.`description`, `main`.`tarot_cards`.`symbolism`, `main`.`tarot_cards`.`uprightMeaning`, `main`.`tarot_cards`.`reversedMeaning`, `main`.`tarot_cards`.`story`, `main`.`tarot_cards`.`lessons`, `main`.`tarot_cards`.`questions`, `main`.`tarot_cards`.`loveMeaning`, `main`.`tarot_cards`.`careerMeaning`, `main`.`tarot_cards`.`spiritualMeaning`, `main`.`tarot_cards`.`symbols`, `main`.`tarot_cards`.`examples`, `main`.`tarot_cards`.`combinations`, `main`.`tarot_cards`.`isActive`, `main`.`tarot_cards`.`createdAt`, `main`.`tarot_cards`.`updatedAt` FROM `main`.`tarot_cards` WHERE `main`.`tarot_cards`.`isActive` = ? ORDER BY `main`.`tarot_cards`.`position` ASC LIMIT ? OFFSET ?
+ GET /api/cards 200 in 11ms (compile: 1613µs, render: 10ms)

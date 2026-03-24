@@ -95,7 +95,8 @@ enum Element {
 model TarotCard {
   id                String   @id @default(cuid())
   name              String   @unique
-  shortName         String   @unique // e.g., "fool", "death", "2c", "ks"
+  slug              String?  @unique // e.g., "el-loco", "el-mago"
+  shortName         String?  @unique // e.g., "fool", "death", "2c", "ks"
   cardType          CardType
   suit              Suit
   element           Element
@@ -107,32 +108,43 @@ model TarotCard {
   // Numerology & Position
   number            Int?     // 0-21 for Major, 1-14 for Minor
   position          Int      // Overall position in deck (0-77)
+  rank              String?  // "page", "knight", "queen", "king" for court cards
   
   // Core Meanings
   keywords          Json     // Array of keywords
+  coreMeaning       String?  // Core essence of the card
   description       String   // General description
   symbolism         Json     // Array of symbolic elements
+  symbolsDetailed   Json?    // Detailed symbol explanations with keys
   
   // Interpretations
   uprightMeaning    String   // Meaning in upright position
-  reversedMeaning   String   // Meaning in reversed/challenging position
+  reversed          Json?    // { meaning, warning, advice, commonManifestations }
   
   // Extended Content
   story             String?  // Narrative/archetypal story
   lessons           Json?    // Array of life lessons
   questions         Json?    // Reflection questions
-  
-  // Contextual Interpretations
-  loveMeaning       String?  // Love & relationships context
-  careerMeaning     String?  // Career & work context
-  spiritualMeaning  String?  // Spiritual growth context
-  
-  // Learning Resources
-  symbols           Json?    // Detailed symbol explanations
   examples          Json?    // Interpretation examples
+  
+  // Position-Based Meanings (NEW - v2.0)
+  positionMeanings  Json?    // { situacion_actual, bloqueo, consejo, resultado, pasado, presente, futuro }
+  
+  // Practical Interpretation (NEW - v2.0)
+  practicalInterpretation Json? // { core, shadow, advice, warning }
+  
+  // Contextual Interpretations (EXPANDED - v2.0)
+  contexts          Json?    // { general, love, career, spiritual, project, selfKnowledge, decisionMaking }
+  
+  // Learning Content (NEW - v2.0)
+  learningContent   Json?    // { simpleMeaning, howToRecognizeIt, commonMistakes, whenItAppears }
+  
+  // Interpretation Rules (NEW - v2.0)
+  interpretationRules Json?  // { energy[], polarity, intensity, adviceMode, timeSense }
   
   // Card Combinations
   combinations      Json?    // Suggested card combinations with meanings
+  combinationExamples Json?  // [{ with, type, meaning }]
   
   // System
   isActive          Boolean  @default(true)

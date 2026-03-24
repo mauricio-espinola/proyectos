@@ -1,208 +1,98 @@
 import { NextRequest, NextResponse } from 'next/server';
 import ZAI from 'z-ai-web-dev-sdk';
-
-interface CardData {
-  name: string;
-  uprightMeaning: string;
-  reversedMeaning: string;
-  keywords: string[];
-  position: number;
-  positionName: string;
-  isReversed: boolean;
-}
-
-interface PreviousReading {
-  cards: string[];
-  aspect?: string;
-}
-
-interface InterpretRequest {
-  question: string;
-  cards: CardData[];
-  step: number;
-  aspect?: string;
-  previousReadings?: PreviousReading[];
-}
+import { db } from '@/lib/db';
+import { 
+  generateInterpretation, 
+  formatInterpretationAsMarkdown,
+  TarotCardV2,
+  Position,
+  SpreadDefinition,
+  InterpretationContext,
+  DrawnCard
+} from '@/lib/interpretation-engine';
 
 // ============================================
-// MOTOR DE INTERPRETACIÓN CON POLARIDAD
+// SPREAD DEFINITIONS (from JSON v2)
 // ============================================
 
-const SYSTEM_PROMPT = `Eres un facilitador de autoconocimiento que utiliza el tarot como espejo proyectivo, siguiendo una aproximación junguiana donde el significado NO está en las cartas, sino que se CONSTRUYE en la mente del consultante.
+const spreadDefinitions: Record<string, SpreadDefinition> = {
+  three_card_guided: {
+    name: 'Tirada guiada de 3 cartas',
+    positions: [
+      { key: 'situacion_actual', label: 'Situación actual', intent: 'describir el estado de la energía' },
+      { key: 'bloqueo', label: 'Bloqueo o desafío', intent: 'mostrar la fricción o patrón limitante' },
+      { key: 'consejo', label: 'Consejo o dirección', intent: 'señalar el ajuste más útil' },
+    ],
+  },
+  past_present_future: {
+    name: 'Pasado, presente y futuro',
+    positions: [
+      { key: 'pasado', label: 'Pasado', intent: 'ubicar el origen o antecedente' },
+      { key: 'presente', label: 'Presente', intent: 'ver la energía dominante actual' },
+      { key: 'futuro', label: 'Futuro', intent: 'leer la tendencia si no cambia el patrón' },
+    ],
+  },
+};
+
+// Position names mapping for backwards compatibility
+const positionNamesMap: Record<string, string> = {
+  'Past': 'pasado',
+  'Present': 'presente',
+  'Future': 'futuro',
+  'Pasado / Origen': 'pasado',
+  'Presente / Situación': 'presente',
+  'Futuro / Consejo': 'futuro',
+  'Situación actual': 'situacion_actual',
+  'Bloqueo': 'bloqueo',
+  'Consejo': 'consejo',
+};
+
+// ============================================
+// AI INTERPRETATION (fallback/enhancement)
+// ============================================
+
+const SYSTEM_PROMPT = `Eres un facilitador de autoconocimiento que utiliza el tarot como espejo proyectivo, siguiendo una aproximación junguiana.
 
 ## 🧠 FILOSOFÍA CENTRAL
-
 Las cartas son VENTANAS, no espejos. No muestran "la verdad" - ofrecen ángulos desde los cuales el consultante puede explorar su situación.
 
 ## ⚖️ REGLA DE ORO: POLARIDAD SIEMPRE
-
 CADA carta tiene DOS caras. NUNCA presentes solo una.
-
-### ☀️ LUZ (aspectos constructivos)
-- Potencial, crecimiento, oportunidad
-- Lo que podría funcionar
-- Recursos disponibles
-
-### 🌑 SOMBRA (aspectos desafiantes)  
-- Posibles obstáculos, negaciones, evasiones
-- Lo que podría estar evitando
-- Incomodidad necesaria
-
-## 🎯 TONO DE LAS PREGUNTAS (CRÍTICO)
-
-### ❌ EVITA confrontación directa:
-- "¿Es esto una excusa de tu ego?"
-- "¿Solo es un frenesí pasajero?"
-- "¿Te estás engañando?"
-- "¿Por qué evitas la realidad?"
-
-### ✅ USA confrontación reflexiva:
-- "¿Podría haber una parte de ti que está evitando el esfuerzo que esto requiere?"
-- "¿Este impulso que sientes es algo que podrías sostener en el tiempo?"
-- "¿Hay algún aspecto de esta situación que prefieres no mirar de frente?"
-- "¿Qué pasaría si exploras lo que te hace sentir incómodo sobre esto?"
-
-**LA DIFERENCIA:**
-- Directa = acusa, juzga, provoca defensiva
-- Reflexiva = invita, explora, mantiene apertura
-
-**SIEMPRE:**
-- Empieza con "¿Podría...", "¿Habrá...", "¿Qué pasaría si..."
-- Usa "una parte de ti" en lugar de "tú"
-- Ofrece exploración, no acusación
-- El consultante debe SENTIR que descubre, NO que es juzgado
+☀️ LUZ (aspectos constructivos)
+🌑 SOMBRA (aspectos desafiantes)
 
 ## 📝 ESTRUCTURA OBLIGATORIA PARA CADA CARTA
-
 **[Nombre de la Carta]** *[posición]*
+Esta carta suele asociarse con [tema general].
+☀️ **Luz:** [aspecto constructivo]
+🌑 **Sombra:** [aspecto desafiante]
+👉 **Para reflexionar:** ¿[Pregunta reflexiva]?`;
 
-Esta carta suele asociarse con [tema general objetivo].
-
-☀️ **Luz:** [aspecto constructivo/posibilidad]
-Podría reflejar [conexión positiva con la situación].
-
-🌑 **Sombra:** [aspecto desafiante/incomodidad]
-También podría señalar [posible evasión, negación o dificultad].
-
-👉 **Para reflexionar:**
-¿[Pregunta REFLEXIVA que integre AMBOS aspectos]?
-
-## 🎯 EJEMPLO REAL (Siete de Espadas)
-
-**Siete de Espadas** *[Presente]*
-
-Esta carta suele asociarse con estrategia y pensamiento lateral.
-
-☀️ **Luz:** Capacidad de encontrar caminos alternativos cuando el directo está bloqueado. Podría reflejar astucia para proteger lo que valoras.
-
-🌑 **Sombra:** También puede señalar momentos donde elegimos evitar en lugar de enfrentar. A veces hay conversaciones pendientes que se posponen.
-
-👉 **Para reflexionar:**
-¿Podría haber alguna situación donde estás usando la estrategia como una forma gentil de evitar algo que necesita atención directa?
-
-## ❌ PROHIBIDO
-
-- Presentar SOLO el aspecto positivo ("limpiar" la interpretación)
-- Decir "esto significa" o "esto indica"
-- Hacer predicciones
-- Ignorar la sombra de cartas "difíciles"
-- Preguntas que acusen o juzguen
-- Lenguaje confrontativo directo
-
-## ✅ OBLIGATORIO
-
-- SIEMPRE incluir luz Y sombra en cada carta
-- Lenguaje hipotético: "podría", "suele", "a veces", "puede"
-- Preguntas REFLEXIVAS (no acusatorias)
-- Ser honesto con los aspectos difíciles PERO con compasión
-- Usar emojis ☀️ 🌑 👉 para estructura visual
-- El consultante debe sentirse ACOMPAÑADO, no juzgado`;
-
-function getStepPrompt(step: number, question: string, cards: CardData[], aspect?: string, previousReadings?: PreviousReading[]): string {
+function getStepPrompt(step: number, question: string, cards: any[], aspect?: string, previousReadings?: any[]): string {
   const cardsInfo = cards.map(c => 
     `**${c.positionName}**: ${c.name} (${c.isReversed ? 'Invertida' : 'Derecha'})
-    - Referencia simbólica: ${c.isReversed ? c.reversedMeaning : c.uprightMeaning}
-    - Palabras clave: ${c.keywords.join(', ')}`
+    - ${c.isReversed ? c.reversedMeaning : c.uprightMeaning}`
   ).join('\n\n');
 
-  // Build context from previous readings
   const previousContext = previousReadings && previousReadings.length > 0
-    ? `\n\n## 📜 Tiradas Anteriores en esta Sesión\n\nEsta es una nueva tirada para profundizar. Las tiradas anteriores fueron:\n${previousReadings.map((r, i) => 
-      `**Tirada ${i + 1}**${r.aspect ? ` - Enfoque: "${r.aspect}"` : ''}\nCartas: ${r.cards.join(', ')}`
-    ).join('\n\n')}\n`
+    ? `\n\n## 📜 Tiradas Anteriores\n${previousReadings.map((r, i) => 
+        `**Tirada ${i + 1}**: ${r.cards.join(', ')}`
+      ).join('\n\n')}\n`
     : '';
 
-  const aspectInstruction = aspect
-    ? `\n\n## 🎯 Aspecto a Profundizar\n\nEl consultante desea explorar específicamente: "${aspect}"\nEnfoca tu interpretación en este aspecto, conectando las nuevas cartas con lo que ya se ha explorado.\n`
-    : '';
+  return `La persona consulta: "${question}"
+${previousContext}
 
-  if (step === 1) {
-    return `La persona consulta: "${question}"
-${previousContext}${aspectInstruction}
-
-Las cartas que aparecieron son:
+Las cartas:
 ${cardsInfo}
 
-## Nivel 1 - Exploración con Polaridad
+## Nivel ${step} - Interpretación
 
 Para CADA carta:
-1. Presenta la carta con lenguaje objetivo y abierto
-2. Identifica su LUZ (potencial/recurso) 
-3. Identifica su SOMBRA (desafío/evasión posible)
-4. Formula una pregunta REFLEXIVA (no acusatoria) que invite a explorar ambos lados
-
-${aspect ? `Como es una profundización, conecta esta nueva tirada con el aspecto que el consultante quiere explorar.` : ''}
-
-RECUERDA:
-- No "limpies" la interpretación - incluye la sombra
-- Pero PRESENTA la sombra con compasión, no con acusación
-- El objetivo es que el consultante QUIERA explorar, no que se sienta atacado`;
-  }
-
-  if (step === 2) {
-    return `La persona consulta: "${question}"
-${previousContext}${aspectInstruction}
-
-Las cartas:
-${cardsInfo}
-
-## Nivel 2 - Diálogo de Polaridades
-
-Ahora profundiza en las CONEXIONES:
-
-1. ¿Cómo dialogan las LUCES entre sí? ¿Hay un recurso común?
-2. ¿Cómo dialogan las SOMBRAS? ¿Hay un patrón que podría estar operando?
-3. ¿Qué tensión podría existir entre lo que se desea y lo que se evita?
-
-Ofrece 2-3 preguntas REFLEXIVAS que integren estas polaridades.
-
-${aspect ? `Conecta con el aspecto de profundización: "${aspect}"` : ''}
-
-IMPORTANTE: El consultante debe sentir que DESCUBRE patrones, no que es acusado de tenerlos.`;
-  }
-
-  if (step === 3) {
-    return `La persona consulta: "${question}"
-${previousContext}${aspectInstruction}
-
-Las cartas:
-${cardsInfo}
-
-## Nivel 3 - Síntesis para el Camino
-
-Para cerrar:
-
-1. Ofrece una SÍNTESIS que honre tanto la luz como la sombra
-2. Identifica la ELECCIÓN central que podría estar presente (sin imponer cuál elegir)
-3. Sugiere 3-4 preguntas poderosas para llevarse
-4. Cierra con una invitación cálida a la honestidad interior
-
-El objetivo: claridad con compasión. El consultante se va entendiendo mejor, no juzgado.
-
-La mejor lectura no confronta - INVITA a mirar.`;
-  }
-
-  return '';
+1. Presenta la carta con lenguaje objetivo
+2. Identifica su LUZ (potencial)
+3. Identifica su SOMBRA (desafío)
+4. Formula una pregunta REFLEXIVA`;
 }
 
 let zaiInstance: Awaited<ReturnType<typeof ZAI.create>> | null = null;
@@ -214,10 +104,23 @@ async function getZAI() {
   return zaiInstance;
 }
 
+// ============================================
+// MAIN API HANDLER
+// ============================================
+
 export async function POST(request: NextRequest) {
   try {
-    const body: InterpretRequest = await request.json();
-    const { question, cards, step, aspect, previousReadings } = body;
+    const body = await request.json();
+    const { 
+      question, 
+      cards, 
+      step, 
+      aspect, 
+      previousReadings,
+      useAI = true,
+      spreadType = 'past_present_future',
+      category = 'general'
+    } = body;
 
     if (!question || !cards || cards.length === 0) {
       return NextResponse.json(
@@ -226,21 +129,102 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const zai = await getZAI();
-    const prompt = getStepPrompt(step, question, cards, aspect, previousReadings);
+    // Get spread definition
+    const spreadDef = spreadDefinitions[spreadType] || spreadDefinitions.past_present_future;
 
-    const completion = await zai.chat.completions.create({
-      messages: [
-        { role: 'assistant', content: SYSTEM_PROMPT },
-        { role: 'user', content: prompt }
-      ],
-      thinking: { type: 'disabled' }
+    // Convert cards to TarotCardV2 format with position info
+    const drawnCards: DrawnCard[] = await Promise.all(cards.map(async (c: any, index: number) => {
+      // Get full card data from database
+      const dbCard = await db.tarotCard.findFirst({
+        where: { name: c.name }
+      });
+
+      // Map position name to position key
+      const positionKey = positionNamesMap[c.positionName] || spreadDef.positions[index]?.key || 'presente';
+      const position = spreadDef.positions.find(p => p.key === positionKey) || {
+        key: positionKey,
+        label: c.positionName,
+        intent: '',
+      };
+
+      // Convert database card to TarotCardV2 format
+      const cardV2: TarotCardV2 = {
+        id: dbCard?.slug || c.name.toLowerCase().replace(/\s+/g, '-'),
+        slug: dbCard?.slug || c.name.toLowerCase().replace(/\s+/g, '-'),
+        name: c.name,
+        arcanaType: dbCard?.cardType === 'MAJOR_ARCANA' ? 'major' : 'minor',
+        suit: dbCard?.suit,
+        element: dbCard?.element,
+        number: dbCard?.number || undefined,
+        keywords: (dbCard?.keywords as string[]) || c.keywords || [],
+        coreMeaning: dbCard?.coreMeaning || '',
+        description: dbCard?.description || '',
+        uprightMeaning: dbCard?.uprightMeaning || c.uprightMeaning,
+        reversed: dbCard?.reversed as any || { meaning: c.reversedMeaning },
+        positionMeanings: dbCard?.positionMeanings as any,
+        practicalInterpretation: dbCard?.practicalInterpretation as any,
+        contexts: dbCard?.contexts as any,
+        learningContent: dbCard?.learningContent as any,
+        interpretationRules: dbCard?.interpretationRules as any,
+        lessons: (dbCard?.lessons as string[]) || [],
+        questions: (dbCard?.questions as string[]) || [],
+      };
+
+      return {
+        card: cardV2,
+        position,
+        isReversed: c.isReversed,
+      };
+    }));
+
+    // Determine category from question context
+    const contextCategory = determineCategory(question, category);
+
+    // Try AI interpretation first (if enabled)
+    if (useAI) {
+      try {
+        const zai = await getZAI();
+        const prompt = getStepPrompt(step || 1, question, cards, aspect, previousReadings);
+
+        const completion = await zai.chat.completions.create({
+          messages: [
+            { role: 'assistant', content: SYSTEM_PROMPT },
+            { role: 'user', content: prompt }
+          ],
+          thinking: { type: 'disabled' }
+        });
+
+        const aiInterpretation = completion.choices?.[0]?.message?.content;
+        
+        if (aiInterpretation) {
+          return NextResponse.json({ 
+            interpretation: aiInterpretation,
+            source: 'ai',
+            hasPositionData: drawnCards.some(dc => dc.card.positionMeanings),
+          });
+        }
+      } catch (aiError: any) {
+        console.log('AI interpretation failed, falling back to structured engine:', aiError.message);
+      }
+    }
+
+    // Fallback: Use structured interpretation engine
+    const context: InterpretationContext = {
+      question,
+      category: contextCategory as any,
+    };
+
+    const result = generateInterpretation(drawnCards, context, spreadDef);
+    const interpretation = formatInterpretationAsMarkdown(result);
+
+    return NextResponse.json({ 
+      interpretation,
+      source: 'structured',
+      hasPositionData: true,
+      overallEnergy: result.overallEnergy,
+      reflectionQuestions: result.reflectionQuestions,
     });
 
-    const interpretation = completion.choices?.[0]?.message?.content || 
-      'No se pudo generar la interpretación. Por favor, intenta de nuevo.';
-
-    return NextResponse.json({ interpretation });
   } catch (error) {
     console.error('Interpretation error:', error);
     return NextResponse.json(
@@ -248,4 +232,34 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+// ============================================
+// HELPERS
+// ============================================
+
+function determineCategory(question: string, explicitCategory: string): string {
+  if (explicitCategory && explicitCategory !== 'general') {
+    return explicitCategory;
+  }
+
+  const lowerQuestion = question.toLowerCase();
+  
+  if (lowerQuestion.includes('amor') || lowerQuestion.includes('pareja') || lowerQuestion.includes('relación') || lowerQuestion.includes('corazón')) {
+    return 'love';
+  }
+  if (lowerQuestion.includes('trabajo') || lowerQuestion.includes('carrera') || lowerQuestion.includes('empleo') || lowerQuestion.includes('dinero') || lowerQuestion.includes('negocio')) {
+    return 'career';
+  }
+  if (lowerQuestion.includes('espiritual') || lowerQuestion.includes('alma') || lowerQuestion.includes('propósito') || lowerQuestion.includes('camino')) {
+    return 'spiritual';
+  }
+  if (lowerQuestion.includes('proyecto') || lowerQuestion.includes('emprender') || lowerQuestion.includes('crear')) {
+    return 'project';
+  }
+  if (lowerQuestion.includes('decidir') || lowerQuestion.includes('elección') || lowerQuestion.includes('decisión')) {
+    return 'decisionMaking';
+  }
+  
+  return 'general';
 }
