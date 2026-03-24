@@ -1,0 +1,274 @@
+{
+  "majorArcana": [
+    {
+      "name": "El Loco",
+      "shortName": "fool",
+      "number": 0,
+      "keywords": ["nuevos comienzos", "inocencia", "espontaneidad", "aventura", "fe", "libertad"],
+      "description": "El Loco representa el inicio de un viaje espiritual. Es el viajero eterno, el alma que se aventura hacia lo desconocido con confianza absoluta. Esta carta nos invita a dar el primer paso sin miedo, confiando en que el universo nos guiará.",
+      "symbolism": [
+        "El viajero con su atado: las posesiones materiales son pocas, la libertad es grande",
+        "El perro blanco: instinto y lealtad que protege el camino",
+        "El abismo: el salto hacia lo desconocido",
+        "El sol brillante: optimismo y energía vital",
+        "La montaña lejana: metas por alcanzar"
+      ],
+      "uprightMeaning": "Nuevos comienzos, oportunidades frescas, espontaneidad. Es momento de confiar y dar el salto hacia lo desconocido con fe y optimismo. El universo te invita a explorar nuevos caminos.",
+      "reversedMeaning": "Temeridad, imprudencia, riesgo sin considerar consecuencias. Puede indicar miedo a comenzar algo nuevo o resistencia al cambio necesario.",
+      "story": "El Loco es el alma que despierta al amanecer, mira el horizonte infinito y sonríe. No tiene mapa, no tiene plan, solo tiene la certeza de que cada paso es perfecto. Es el eterno principiante que todo lo aborda con curiosidad y asombro.",
+      "lessons": ["Confiar en el proceso", "Abrazar lo desconocido", "Dejar ir el control excesivo", "Vivir el presente"],
+      "questions": ["¿Qué nuevo camino está emergiendo en mi vida?", "¿Qué me impide dar el primer paso?", "¿Dónde necesito más espontaneidad?"],
+      "loveMeaning": "Nuevas relaciones, aventuras románticas, relaciones espontáneas. Si hay pareja, indica renovar la relación con frescura.",
+      "careerMeaning": "Nuevos proyectos, cambios de carrera, emprendimientos. Momento de asumir riesgos calculados.",
+      "spiritualMeaning": "El inicio del despertar espiritual. El alma se prepara para un viaje transformador.",
+      "symbols": {
+        "viajero": "El buscador espiritual que todos llevamos dentro",
+        "perro": "La guía instintiva y la protección divina",
+        "abismo": "El umbral entre lo conocido y lo posible",
+        "sol": "La presencia divina que ilumina todo camino"
+      },
+      "examples": [
+        "Un viaje inesperado que cambia tu perspectiva",
+        "Dejar un trabajo seguro para seguir tu pasión",
+        "Comenzar una relación sin garantías"
+      ]
+    },
+    {
+      "name": "El Mago",
+      "shortName": "magician",
+      "number": 1,
+      "keywords": ["manifestación", "poder", "creación", "habilidad", "concentración", "recursos"],
+      "description": "El Mago es el arquitecto de la realidad. Conecta el cielo con la tierra, transformando ideas en materia. Representa el poder de la voluntad enfocada y la capacidad de manifestar lo que deseamos.",
+      "uprightMeaning": "Tienes todos los recursos necesarios para manifestar tus objetivos. Es momento de actuar con intención clara y usar tus habilidades. El universo te respalda.",
+      "reversedMeaning": "Talento desperdiciado, manipulación, falta de dirección. Puede indicar que no estás usando todo tu potencial o que hay engaño en tu entorno."
+    },
+    {
+      "name": "La Sacerdotisa",
+      "shortName": "high_priestess",
+      "number": 2,
+      "keywords": ["intuición", "misterio", "sabiduría interior", "conocimiento oculto", "inconsciente", "secretos"],
+      "description": "La Sacerdotisa guarda los misterios del inconsciente. Es la voz interior que sabe sin explicar. Representa la sabiduría que no viene del intelecto, sino de la conexión profunda con lo divino femenino.",
+      "uprightMeaning": "Confía en tu intuición. Hay información que aún no es visible pero que tu interior ya conoce. Es momento de silencio, reflexión y escuchar tu voz interior.",
+      "reversedMeaning": "Ignorar la intuición, secretos revelados antes de tiempo, desconexión del interior. Puede indicar que necesitas hacer más espacio para la quietud."
+    },
+    {
+      "name": "La Emperatriz",
+      "shortName": "empress",
+      "number": 3,
+      "keywords": ["abundancia", "fertilidad", "creatividad", "naturaleza", "nutrición", "belleza"],
+      "description": "La Emperatriz es la madre cósmica, la fuerza que nutre todo lo que existe. Representa la creatividad en su forma más abundante, la belleza natural y la capacidad de dar vida a proyectos y relaciones.",
+      "uprightMeaning": "Abundancia, creatividad floreciente, fertilidad en todos los sentidos. Es momento de nutrir proyectos y relaciones. La naturaleza te bendice con su generosidad.",
+      "reversedMeaning": "Bloqueo creativo, negligencia con uno mismo, dependencia emocional. Puede indicar necesidad de reconectar con tu femineidad o creatividad."
+    },
+    {
+      "name": "El Emperador",
+      "shortName": "emperor",
+      "number": 4,
+      "keywords": ["autoridad", "estructura", "padre", "control", "estabilidad", "liderazgo"],
+      "description": "El Emperador representa el principio masculino de estructura y orden. Es el arquitecto que construye sobre bases sólidas, el líder que guía con autoridad y sabiduría. Trae estabilidad y protección.",
+      "uprightMeaning": "Estabilidad, autoridad, estructura sólida. Es momento de tomar el control de tu vida con disciplina. Tienes el poder de construir los cimientos de tu éxito.",
+      "reversedMeaning": "Tiranía, rigidez excesiva, falta de control. Puede indicar problemas con figuras de autoridad o necesidad de flexibilidad."
+    },
+    {
+      "name": "El Sumo Sacerdote",
+      "shortName": "hierophant",
+      "number": 5,
+      "keywords": ["tradición", "conformidad", "enseñanza", "espiritualidad", "instituciones", "guía"],
+      "description": "El Sumo Sacerdote representa la sabiduría de las tradiciones y las instituciones espirituales. Es el puente entre lo divino y lo humano, el maestro que transmite conocimiento sagrado y valores heredados.",
+      "uprightMeaning": "Guía espiritual, tradición, enseñanza sagrada. Es momento de buscar mentores o conectar con sistemas de creencias que te apoyen. La sabiduría ancestral está disponible.",
+      "reversedMeaning": "Rebelión contra tradiciones, ruptura con lo establecido, búsqueda de espiritualidad personal. Puede indicar que las viejas formas ya no te sirven."
+    },
+    {
+      "name": "Los Enamorados",
+      "shortName": "lovers",
+      "number": 6,
+      "keywords": ["amor", "unión", "elección", "armonía", "relaciones", "valores"],
+      "description": "Los Enamorados representan no solo el amor romántico, sino cualquier elección significativa que requiere alinearnos con nuestros valores más profundos. Es la carta de la unión sagrada y las decisiones cruciales.",
+      "uprightMeaning": "Amor profundo, alineación de valores, elección importante. Es momento de decisiones que reflejen quién eres realmente. Las relaciones florecen cuando hay autenticidad.",
+      "reversedMeaning": "Desequilibrio en relaciones, elecciones difíciles, desalineación de valores. Puede indicar una elección que no honra tu verdad."
+    },
+    {
+      "name": "El Carro",
+      "shortName": "chariot",
+      "number": 7,
+      "keywords": ["victoria", "determinación", "control", "voluntad", "acción", "triunfo"],
+      "description": "El Carro representa la victoria conquistada con determinación y voluntad. Es el guerrero que domina las fuerzas opuestas y avanza hacia su objetivo con confianza inquebrantable.",
+      "uprightMeaning": "Victoria, determinación, éxito a través de la voluntad. Es momento de avanzar con confianza y controlar las fuerzas que compiten en tu vida. El triunfo está asegurado.",
+      "reversedMeaning": "Falta de dirección, derrota temporal, pérdida de control. Puede indicar que necesitas reunir fuerzas antes de avanzar."
+    },
+    {
+      "name": "La Justicia",
+      "shortName": "justice",
+      "number": 8,
+      "keywords": ["justicia", "verdad", "karma", "equidad", "ley", "causa y efecto"],
+      "description": "La Justicia representa el equilibrio perfecto entre causa y efecto. Es la verdad que no puede ser ocultada, la balanza que pesa cada acción con precisión matemática. Trae rendición de cuentas y claridad.",
+      "uprightMeaning": "Justicia, verdad revelada, consecuencias justas. Es momento de rendición de cuentas. La verdad saldrá a la luz y recibirás lo que mereces.",
+      "reversedMeaning": "Injusticia, deshonestidad, falta de responsabilidad. Puede indicar que algo no es justo y necesita ser corregido."
+    },
+    {
+      "name": "El Ermitaño",
+      "shortName": "hermit",
+      "number": 9,
+      "keywords": ["introspección", "soledad", "sabiduría", "guía interior", "búsqueda", "retiro"],
+      "description": "El Ermitaño representa la sabiduría que solo se encuentra en el silencio y la soledad consciente. Es el buscador que ilumina su propio camino y, al hacerlo, se convierte en guía para otros.",
+      "uprightMeaning": "Introspección necesaria, búsqueda de respuestas interiores, guía sabia. Es momento de retirarte para encontrar la verdad que buscas. La soledad es tu maestra ahora.",
+      "reversedMeaning": "Aislamiento excesivo, rechazo de ayuda, soledad no productiva. Puede indicar que necesitas equilibrio entre retiro y conexión."
+    },
+    {
+      "name": "La Rueda de la Fortuna",
+      "shortName": "wheel_of_fortune",
+      "number": 10,
+      "keywords": ["ciclos", "destino", "cambio", "suerte", "oportunidad", "giro"],
+      "description": "La Rueda de la Fortuna representa los ciclos eternos de la vida. Lo que sube debe bajar, y lo que baja volverá a subir. Nos enseña que el cambio es la única constante y que cada final es un nuevo comienzo.",
+      "uprightMeaning": "Cambios positivos, giro del destino, nuevas oportunidades. La rueda gira a tu favor. Es momento de aprovechar el impulso del universo.",
+      "reversedMeaning": "Cambios difíciles, mala racha temporal, resistencia al cambio. Recuerda que esto también pasará."
+    },
+    {
+      "name": "La Fuerza",
+      "shortName": "strength",
+      "number": 11,
+      "keywords": ["fuerza interior", "coraje", "paciencia", "compasión", "dominio", "resiliencia"],
+      "description": "La Fuerza representa no la fuerza bruta, sino el poder suave de la compasión y la paciencia. Es la capacidad de dominar los instintos inferiores con amor, no con represión.",
+      "uprightMeaning": "Fuerza interior, coraje compasivo, dominio sobre impulsos. Tienes la capacidad de enfrentar cualquier desafío con gracia. Tu verdadero poder está en la suavidad.",
+      "reversedMeaning": "Debilidad temporal, falta de autocontrol, duda sobre capacidades. Puede indicar que necesitas reconectar con tu poder interior."
+    },
+    {
+      "name": "El Colgado",
+      "shortName": "hanged_man",
+      "number": 12,
+      "keywords": ["suspensión", "sacrificio", "nueva perspectiva", "espera", "rendición", "iluminación"],
+      "description": "El Colgado representa el poder de la rendición y la perspectiva que solo se obtiene al ver el mundo al revés. Es el sacrificio voluntario que trae sabiduría y transformación.",
+      "uprightMeaning": "Pausa necesaria, nueva perspectiva, sacrificio que vale la pena. Es momento de rendirte a lo que es y ver desde otro ángulo. La espera trae revelación.",
+      "reversedMeaning": "Resistencia a rendirse, estancamiento innecesario, sacrificio sin propósito. Puede indicar que necesitas soltar el control."
+    },
+    {
+      "name": "La Muerte",
+      "shortName": "death",
+      "number": 13,
+      "keywords": ["transformación", "final", "renacimiento", "cambio profundo", "transición", "liberación"],
+      "description": "La Muerte representa no el fin físico, sino la transformación profunda. Es el ciclo inevitable de muerte y renacimiento, la liberación de lo viejo para dar paso a lo nuevo.",
+      "uprightMeaning": "Transformación profunda, final necesario, renacimiento. Algo debe morir para que algo nuevo nazca. No temas el cambio, abraza la transformación.",
+      "reversedMeaning": "Resistencia al cambio, estancamiento, miedo a transformarse. Puede indicar que te aferras a lo que ya no te sirve."
+    },
+    {
+      "name": "La Templanza",
+      "shortName": "temperance",
+      "number": 14,
+      "keywords": ["equilibrio", "moderación", "paciencia", "sanación", "propósito", "alquimia"],
+      "description": "La Templanza representa la alquimia del equilibrio perfecto. Es el arte de mezclar opuestos hasta crear armonía, la paciencia que sana y el propósito que guía toda acción.",
+      "uprightMeaning": "Equilibrio, moderación, sanación gradual. Es momento de encontrar el punto medio, de ser paciente contigo y con el proceso. La armonía se está gestando.",
+      "reversedMeaning": "Desequilibrio, exceso, impaciencia. Puede indicar que necesitas reconectar con la moderación y la calma."
+    },
+    {
+      "name": "El Diablo",
+      "shortName": "devil",
+      "number": 15,
+      "keywords": ["ataduras", "adicción", "materialismo", "sombra", "tentación", "confrontación"],
+      "description": "El Diablo representa las cadenas que nosotros mismos creamos. Es la sombra que debemos confrontar, las adicciones y patrones que nos limitan, pero también la oportunidad de liberarnos al reconocerlos.",
+      "uprightMeaning": "Confrontación con la sombra, ataduras que limitan, patrones que debes reconocer. Es momento de ver tus cadenas y entender que tú tienes la llave.",
+      "reversedMeaning": "Liberación de ataduras, ruptura de patrones, libertad ganada. Estás listo para soltar lo que te aprisiona."
+    },
+    {
+      "name": "La Torre",
+      "shortName": "tower",
+      "number": 16,
+      "keywords": ["colapso", "revelación", "liberación súbita", "destrucción", "verdad", "cambio drástico"],
+      "description": "La Torre representa la destrucción necesaria de estructuras falsas. Es el rayo que ilumina y destruye simultáneamente, el colapso que libera de lo que ya no sirve.",
+      "uprightMeaning": "Colapso necesario, revelación impactante, liberación dramática. Aunque parezca destrucción, es liberación. Lo que cae nunca fue sólido.",
+      "reversedMeaning": "Evitar el colapso, cambio gradual en lugar de súbito, resistencia a la transformación. El cambio llegará de otra forma."
+    },
+    {
+      "name": "La Estrella",
+      "shortName": "star",
+      "number": 17,
+      "keywords": ["esperanza", "inspiración", "fe", "sanación", "renovación", "guía"],
+      "description": "La Estrella representa la esperanza que surge después de la tormenta. Es la luz que guía en la oscuridad, la sanación que fluye y la renovación del espíritu.",
+      "uprightMeaning": "Esperanza, sanación, inspiración renovada. Después de la oscuridad, la luz aparece. Confía en que el universo te guía y sana.",
+      "reversedMeaning": "Desesperanza temporal, desconexión de la fe, necesidad de reconectar con la esperanza. La luz sigue ahí, aunque no la veas."
+    },
+    {
+      "name": "La Luna",
+      "shortName": "moon",
+      "number": 18,
+      "keywords": ["ilusión", "intuición", "miedo", "inconsciente", "sueños", "engaño"],
+      "description": "La Luna representa el reino de las ilusiones y el inconsciente. Es el camino a través de la niebla donde la intuición es la única guía y los miedos emergen para ser confrontados.",
+      "uprightMeaning": "Navegación por intuición, confrontación de miedos, ilusiones que disipar. No todo es lo que parece. Confía en tu instinto y atraviesa la niebla.",
+      "reversedMeaning": "Miedos liberados, claridad después de la confusión, ilusiones disipadas. La niebla se levanta."
+    },
+    {
+      "name": "El Sol",
+      "shortName": "sun",
+      "number": 19,
+      "keywords": ["alegría", "éxito", "vitalidad", "claridad", "optimismo", "iluminación"],
+      "description": "El Sol representa la victoria de la luz sobre la oscuridad. Es la alegría pura, el éxito alcanzado, la claridad total y la celebración de la vida en su máximo esplendor.",
+      "uprightMeaning": "Éxito, alegría, claridad total. Todo se ilumina y las sombras desaparecen. Es momento de celebrar y disfrutar la luz que has alcanzado.",
+      "reversedMeaning": "Éxito temporalmente eclipsado, exceso de optimismo, necesidad de buscar la luz interior."
+    },
+    {
+      "name": "El Juicio",
+      "shortName": "judgement",
+      "number": 20,
+      "keywords": ["renacimiento", "llamado", "absolución", "despertar", "decisión final", "redención"],
+      "description": "El Juicio representa el llamado del alma hacia una nueva vida. Es el despertar de la conciencia, la rendición de cuentas final y la oportunidad de renacer completamente.",
+      "uprightMeaning": "Renacimiento, llamado superior, absolución. Es momento de responder al llamado de tu alma. Una transformación profunda te invita a despertar.",
+      "reversedMeaning": "Resistencia al llamado, duda sobre el camino, necesidad de auto-perdón. Escucha la voz interior."
+    },
+    {
+      "name": "El Mundo",
+      "shortName": "world",
+      "number": 21,
+      "keywords": ["completitud", "integración", "realización", "ciclo completo", "éxito total", "unión"],
+      "description": "El Mundo representa la culminación exitosa del viaje. Es la integración de todas las experiencias, la realización del ser completo y la celebración de un ciclo perfectamente cerrado.",
+      "uprightMeaning": "Completitud, éxito total, realización. Has llegado a donde debías llegar. Un ciclo se cierra con maestría y celebración.",
+      "reversedMeaning": "Falta de cierre, búsqueda de completitud, ciclo que necesita terminar. El final está cerca."
+    }
+  ],
+  "minorArcana": {
+    "suits": {
+      "cups": {
+        "name": "Copas",
+        "element": "Agua",
+        "themes": "emociones, relaciones, intuición, creatividad emocional",
+        "symbols": ["agua", "corazón", "sentimientos", "relaciones", "sueños", "intuición"]
+      },
+      "swords": {
+        "name": "Espadas",
+        "element": "Aire",
+        "themes": "pensamiento, conflicto, verdad, comunicación",
+        "symbols": ["mente", "palabra", "conflicto", "verdad", "decisión", "claridad"]
+      },
+      "wands": {
+        "name": "Bastos",
+        "element": "Fuego",
+        "themes": "acción, pasión, creatividad, energía",
+        "symbols": ["fuego", "pasión", "energía", "acción", "creatividad", "inspiración"]
+      },
+      "pentacles": {
+        "name": "Oros",
+        "element": "Tierra",
+        "themes": "materia, dinero, cuerpo, naturaleza",
+        "symbols": ["tierra", "dinero", "cuerpo", "naturaleza", "abundancia", "seguridad"]
+      }
+    },
+    "numbers": {
+      "1": { "name": "As", "keywords": ["nuevo comienzo", "potencial", "oportunidad", "semilla"] },
+      "2": { "name": "Dos", "keywords": ["elección", "dilema", "equilibrio", "asociación"] },
+      "3": { "name": "Tres", "keywords": ["creación", "colaboración", "expansión", "manifestación inicial"] },
+      "4": { "name": "Cuatro", "keywords": ["estabilidad", "fundamento", "descanso", "estructura"] },
+      "5": { "name": "Cinco", "keywords": ["cambio", "conflicto", "crisis", "transformación"] },
+      "6": { "name": "Seis", "keywords": ["armonía", "comunicación", "balance", "transición"] },
+      "7": { "name": "Siete", "keywords": ["evaluación", "elección espiritual", "reflexión", "visión"] },
+      "8": { "name": "Ocho", "keywords": ["poder", "movimiento", "cambio rápido", "justicia"] },
+      "9": { "name": "Nueve", "keywords": ["casi completo", "sabiduría", "culminación", "recompensa"] },
+      "10": { "name": "Diez", "keywords": ["finalización", "pleno", "ciclo completo", "transformación final"] }
+    },
+    "courtCards": {
+      "11": { "name": "Sota", "role": "mensajero, estudiante, nuevo enfoque", "keywords": ["mensaje", "novedad", "curiosidad", "aprendizaje"] },
+      "12": { "name": "Caballo", "role": "guerrero, buscador, acción", "keywords": ["acción", "movimiento", "persecución", "caballería"] },
+      "13": { "name": "Reina", "role": "emocional, intuitivo, nutridor", "keywords": ["intuición", "cuidado", "poder interior", "madurez"] },
+      "14": { "name": "Rey", "role": "maduro, dominante, control", "keywords": ["autoridad", "dominio", "madurez", "control"] }
+    }
+  },
+  "totalCards": 78,
+  "note": "Las 22 cartas de Arcanos Mayores están completas arriba. Los 56 Arcanos Menores se generan combinando: 4 palos × 10 cartas numeradas + 4 palos × 4 cartas de corte = 56 cartas menores."
+}

@@ -1,0 +1,355 @@
+// ===========================================
+// TAROT LEARNING APP - DATABASE SCHEMA
+// ===========================================
+// Designed for scalability, observability, and rich functionality
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ===========================================
+// USER MANAGEMENT & AUTHENTICATION
+// ===========================================
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String?
+  password      String
+  role          UserRole @default(USER)
+  avatar        String?
+  bio           String?
+  
+  // Learning Progress
+  cardsViewed   Int      @default(0)
+  readingsDone  Int      @default(0)
+  level         Int      @default(1)
+  experience    Int      @default(0)
+  
+  // Preferences
+  preferences   Json?    // Store user preferences as JSON
+  
+  // Timestamps
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  lastLoginAt   DateTime?
+  
+  // Relations
+  sessions      Session[]
+  questions     UserQuestion[]
+  spreadSessions SpreadSession[]
+  favorites     FavoriteCard[]
+  auditLogs     AdminAuditLog[]
+  
+  @@map("users")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token        String   @unique
+  expiresAt    DateTime
+  userAgent    String?
+  ipAddress    String?
+  createdAt    DateTime @default(now())
+  
+  @@map("sessions")
+}
+
+// ===========================================
+// TAROT CARDS
+// ===========================================
+
+enum CardType {
+  MAJOR_ARCANA
+  MINOR_ARCANA
+}
+
+enum Suit {
+  CUPS      // Copas - Emociones, relaciones
+  SWORDS    // Espadas - Pensamiento, conflicto
+  WANDS     // Bastos - Acción, creatividad
+  PENTACLES // Oros - Material, dinero
+  MAJOR     // Arcanos Mayores
+}
+
+enum Element {
+  FIRE      // Bastos
+  WATER     // Copas
+  AIR       // Espadas
+  EARTH     // Oros
+  SPIRIT    // Arcanos Mayores
+}
+
+model TarotCard {
+  id                String   @id @default(cuid())
+  name              String   @unique
+  shortName         String   @unique // e.g., "fool", "death", "2c", "ks"
+  cardType          CardType
+  suit              Suit
+  element           Element
+  
+  // Visual
+  imageUrl          String?
+  imageAlt          String?
+  
+  // Numerology & Position
+  number            Int?     // 0-21 for Major, 1-14 for Minor
+  position          Int      // Overall position in deck (0-77)
+  
+  // Core Meanings
+  keywords          Json     // Array of keywords
+  description       String   // General description
+  symbolism         Json     // Array of symbolic elements
+  
+  // Interpretations
+  uprightMeaning    String   // Meaning in upright position
+  reversedMeaning   String   // Meaning in reversed/challenging position
+  
+  // Extended Content
+  story             String?  // Narrative/archetypal story
+  lessons           Json?    // Array of life lessons
+  questions         Json?    // Reflection questions
+  
+  // Contextual Interpretations
+  loveMeaning       String?  // Love & relationships context
+  careerMeaning     String?  // Career & work context
+  spiritualMeaning  String?  // Spiritual growth context
+  
+  // Learning Resources
+  symbols           Json?    // Detailed symbol explanations
+  examples          Json?    // Interpretation examples
+  
+  // Card Combinations
+  combinations      Json?    // Suggested card combinations with meanings
+  
+  // System
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations
+  spreadResults     SpreadCardResult[]
+  favorites         FavoriteCard[]
+  images            CardImage[]
+  
+  @@index([suit])
+  @@index([cardType])
+  @@index([isActive])
+  @@map("tarot_cards")
+}
+
+model CardImage {
+  id          String   @id @default(cuid())
+  cardId      String
+  card        TarotCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  url         String
+  alt         String?
+  variant     String?  // e.g., "default", "alternative", "reversed"
+  isPrimary   Boolean  @default(false)
+  uploadedBy  String?  // Admin user ID
+  createdAt   DateTime @default(now())
+  
+  @@map("card_images")
+}
+
+// ===========================================
+// USER INTERACTIONS
+// ===========================================
+
+model UserQuestion {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question    String
+  category    String?  // e.g., "love", "career", "general"
+  isFavorite  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  
+  // Relations
+  spreadSessions SpreadSession[]
+  
+  @@index([userId])
+  @@index([category])
+  @@map("user_questions")
+}
+
+model FavoriteCard {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cardId    String
+  card      TarotCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  notes     String?
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, cardId])
+  @@map("favorite_cards")
+}
+
+// ===========================================
+// SPREADS & READINGS
+// ===========================================
+
+enum SpreadType {
+  SINGLE        // One card
+  THREE_CARD    // Past, Present, Future
+  CELTIC_CROSS  // 10 cards
+  CUSTOM        // User defined
+}
+
+enum SpreadStatus {
+  IN_PROGRESS
+  COMPLETED
+  ABANDONED
+}
+
+model SpreadSession {
+  id            String       @id @default(cuid())
+  userId        String
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId    String?
+  question      UserQuestion? @relation(fields: [questionId], references: [id], onDelete: SetNull)
+  
+  // Spread Configuration
+  spreadType    SpreadType   @default(THREE_CARD)
+  totalSteps    Int          @default(3) // Number of reading steps (max 3)
+  currentStep   Int          @default(0)
+  
+  // Status
+  status        SpreadStatus @default(IN_PROGRESS)
+  
+  // Timing
+  startedAt     DateTime     @default(now())
+  completedAt   DateTime?
+  
+  // Relations
+  cardResults   SpreadCardResult[]
+  interpretations Interpretation[]
+  
+  @@index([userId])
+  @@index([status])
+  @@map("spread_sessions")
+}
+
+model SpreadCardResult {
+  id            String      @id @default(cuid())
+  sessionId     String
+  session       SpreadSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  // Card Information
+  cardId        String
+  card          TarotCard   @relation(fields: [cardId], references: [id])
+  
+  // Position in Spread
+  position      Int         // 0-indexed position in spread
+  positionName  String      // e.g., "Past", "Present", "Future"
+  
+  // Card State
+  isReversed    Boolean     @default(false)
+  step          Int         // Which reading step (1, 2, or 3)
+  
+  // Timing
+  drawnAt       DateTime    @default(now())
+  
+  @@index([sessionId])
+  @@map("spread_card_results")
+}
+
+model Interpretation {
+  id            String   @id @default(cuid())
+  sessionId     String
+  session       SpreadSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  
+  // Interpretation Content
+  step          Int      // 1, 2, or 3
+  content       String   // The interpretation text
+  rawContent    String?  // Raw AI response
+  
+  // Context
+  focus         String?  // What this step focuses on
+  
+  // Metadata
+  generatedAt   DateTime @default(now())
+  
+  @@index([sessionId])
+  @@map("interpretations")
+}
+
+// ===========================================
+// ADMINISTRATION
+// ===========================================
+
+model AdminAuditLog {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  
+  // Action Details
+  action      String   // e.g., "UPDATE_CARD", "DELETE_USER"
+  entityType  String   // e.g., "TarotCard", "User"
+  entityId    String?  // ID of affected entity
+  
+  // Change Details
+  oldValue    Json?
+  newValue    Json?
+  
+  // Context
+  ipAddress   String?
+  userAgent   String?
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("admin_audit_logs")
+}
+
+model AppSettings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  description String?
+  updatedBy   String?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  
+  @@map("app_settings")
+}
+
+// ===========================================
+// ANALYTICS & METRICS
+// ===========================================
+
+model ReadingMetric {
+  id          String   @id @default(cuid())
+  date        DateTime @default(now())
+  
+  // Aggregated Metrics
+  totalReadings    Int   @default(0)
+  uniqueUsers      Int   @default(0)
+  avgStepsPerReading Float @default(0)
+  
+  // Popular Cards (JSON array of card IDs with counts)
+  popularCards     Json?
+  
+  // Question Categories
+  categoryBreakdown Json?
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([date])
+  @@map("reading_metrics")
+}

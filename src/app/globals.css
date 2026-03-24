@@ -1,0 +1,280 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(0 0% 3.9%);
+  --color-foreground: hsl(0 0% 98%);
+  --color-card: hsl(0 0% 6%);
+  --color-card-foreground: hsl(0 0% 98%);
+  --color-popover: hsl(0 0% 6%);
+  --color-popover-foreground: hsl(0 0% 98%);
+  --color-primary: hsl(271 55% 50%);
+  --color-primary-foreground: hsl(0 0% 98%);
+  --color-secondary: hsl(45 93% 47%);
+  --color-secondary-foreground: hsl(0 0% 10%);
+  --color-muted: hsl(270 30% 15%);
+  --color-muted-foreground: hsl(270 10% 60%);
+  --color-accent: hsl(45 93% 47%);
+  --color-accent-foreground: hsl(0 0% 10%);
+  --color-destructive: hsl(0 62.8% 30.6%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-border: hsl(270 30% 15%);
+  --color-input: hsl(270 30% 15%);
+  --color-ring: hsl(271 55% 50%);
+  --color-gold: hsl(45 93% 47%);
+  --color-purple-deep: hsl(271 80% 30%);
+  --color-purple-light: hsl(271 55% 60%);
+  --color-mystic-bg: hsl(270 50% 8%);
+  --radius-sm: 0.25rem;
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius: 0.75rem;
+}
+
+:root {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 6%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 6%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 271 55% 50%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 45 93% 47%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 270 30% 15%;
+  --muted-foreground: 270 10% 60%;
+  --accent: 45 93% 47%;
+  --accent-foreground: 0 0% 10%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 270 30% 15%;
+  --input: 270 30% 15%;
+  --ring: 271 55% 50%;
+  --radius: 0.75rem;
+  --gold: 45 93% 47%;
+  --purple-deep: 271 80% 30%;
+  --purple-light: 271 55% 60%;
+  --mystic-bg: 270 50% 8%;
+}
+
+.dark {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 6%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 6%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 271 55% 50%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 45 93% 47%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 270 30% 15%;
+  --muted-foreground: 270 10% 60%;
+  --accent: 45 93% 47%;
+  --accent-foreground: 0 0% 10%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 270 30% 15%;
+  --input: 270 30% 15%;
+  --ring: 271 55% 50%;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(271 55% 50% / 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(271 55% 50% / 0.7);
+}
+
+/* Card flip animation */
+.card-flip {
+  perspective: 1000px;
+}
+
+.card-flip-inner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card-flip.flipped .card-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* Perspective utilities for card flip */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Mystical glow effects */
+.glow-gold {
+  box-shadow: 0 0 20px hsl(45 93% 47% / 0.3),
+              0 0 40px hsl(45 93% 47% / 0.2),
+              0 0 60px hsl(45 93% 47% / 0.1);
+}
+
+.glow-purple {
+  box-shadow: 0 0 20px hsl(271 55% 50% / 0.3),
+              0 0 40px hsl(271 55% 50% / 0.2),
+              0 0 60px hsl(271 55% 50% / 0.1);
+}
+
+/* Gradient backgrounds */
+.gradient-mystic {
+  background: linear-gradient(
+    135deg,
+    hsl(0 0% 3.9%) 0%,
+    hsl(271 50% 15%) 50%,
+    hsl(0 0% 3.9%) 100%
+  );
+}
+
+.gradient-gold {
+  background: linear-gradient(
+    135deg,
+    hsl(45 93% 47% / 0.1) 0%,
+    transparent 50%
+  );
+}
+
+/* Text effects */
+.text-gradient-gold {
+  background: linear-gradient(135deg, hsl(45 93% 47%), hsl(45 100% 70%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, hsl(271 55% 50%), hsl(271 70% 70%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Animation keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px hsl(271 55% 50% / 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 40px hsl(271 55% 50% / 0.5),
+                0 0 60px hsl(271 55% 50% / 0.3);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 2s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Tarot card styles */
+.tarot-card {
+  aspect-ratio: 2/3;
+  border-radius: 0.75rem;
+  background: linear-gradient(
+    145deg,
+    hsl(271 50% 20%) 0%,
+    hsl(271 50% 10%) 100%
+  );
+  border: 2px solid hsl(45 93% 47% / 0.5);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 hsl(45 93% 47% / 0.1);
+}
+
+.tarot-card-back {
+  background: 
+    radial-gradient(circle at center, hsl(271 50% 15%) 0%, transparent 70%),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      hsl(45 93% 47% / 0.05) 10px,
+      hsl(45 93% 47% / 0.05) 20px
+    ),
+    linear-gradient(
+      145deg,
+      hsl(271 60% 15%) 0%,
+      hsl(271 50% 8%) 100%
+    );
+}
+
+/* Mystical pattern overlay */
+.pattern-mystic {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
